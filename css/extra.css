@@ -179,17 +179,19 @@ svg text{font-family:ProductSans,Gilroy,serif}
 body{overflow:visible !important}
 html{overflow-x:clip}
 
-/* --- shape-masked walkthrough (All Shapes circle motif; click = full screen) --- */
-.shape-stage{position:relative;padding:24px 0 8px;display:flex;justify-content:center}
-.shape-stage .comp{position:relative;width:min(640px,86vw);aspect-ratio:1/1;cursor:pointer;border:0;background:none;padding:0;display:block}
-.shape-stage .bigcircle{position:absolute;inset:6%;border-radius:50%;overflow:hidden;border:1.5px solid #170600;background:#170600}
-.shape-stage .bigcircle iframe{position:absolute;width:178%;height:178%;top:-39%;left:-39%;border:0;pointer-events:none}
-.shape-stage .deco{position:absolute;border-radius:50%;border:1.5px solid #170600}
-.shape-stage .hintpill{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);z-index:3;background:#170600;color:#FCF9ED;border-radius:9999px;padding:12px 24px;font-size:15px;font-family:ProductSans,Gilroy,serif;white-space:nowrap}
+/* --- all-shapes-masked walkthrough (brand shape composition; click = full screen) --- */
+.shape-stage{position:relative;padding:20px 0 8px;display:flex;justify-content:center}
+.shape-stage .comp{position:relative;width:min(920px,94vw);aspect-ratio:16/10;cursor:pointer;border:0;background:none;padding:0;display:block}
+.shape-stage .mask{position:absolute;inset:0;clip-path:url(#asclip);background:#170600;display:block}
+.shape-stage .mask iframe{position:absolute;width:120%;height:120%;top:-10%;left:-10%;border:0;pointer-events:none}
+.shape-stage .deco{position:absolute;display:block;border-radius:2px}
+.shape-stage .deco.tri{width:0;height:0;background:none !important;border-radius:0}
+.shape-stage .hintpill{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);z-index:3;background:#170600;color:#FCF9ED;border-radius:9999px;padding:12px 24px;font-size:15px;font-family:ProductSans,Gilroy,serif;white-space:nowrap}
 .shape-stage .comp:hover .hintpill{background:#8283DA;color:#fff}
-.shape-stage .comp:focus-visible{outline:3px solid #00BEA9;outline-offset:6px;border-radius:50%}
+.shape-stage .comp:hover .mask{clip-path:none;transition:none}
+.shape-stage .comp:focus-visible{outline:3px solid #00BEA9;outline-offset:6px}
 @media (prefers-reduced-motion: no-preference){
-  .shape-stage .deco{animation:bob 7s ease-in-out infinite alternate}
+  .shape-stage .deco.float{animation:bob 7s ease-in-out infinite alternate}
   @keyframes bob{from{transform:translateY(-6px)}to{transform:translateY(8px)}}
 }
 /* fullscreen walkthrough modal */
