@@ -270,6 +270,21 @@ select(3);
 const spyLinks=[...document.querySelectorAll('[data-spy]')];
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){spyLinks.forEach(l=>l.classList.toggle('on',l.dataset.spy===e.target.id));}})},{rootMargin:'-30% 0px -60% 0px'});
 spyLinks.forEach(l=>{const t=document.getElementById(l.dataset.spy);if(t)obs.observe(t);});
+const stage=document.getElementById('wstage');
+if(stage){
+  const disc=stage.querySelector('.disc');
+  const rm=matchMedia('(prefers-reduced-motion: reduce)');
+  const onScroll=()=>{
+    if(rm.matches){disc.style.clipPath='none';return;}
+    const total=stage.offsetHeight-innerHeight;
+    const p=Math.min(1,Math.max(0,-stage.getBoundingClientRect().top/Math.max(1,total)));
+    disc.style.clipPath='circle('+(13+p*92)+'% at 50% 50%)';
+  };
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+  stage.querySelector('.enter').addEventListener('click',()=>stage.classList.add('live'));
+  stage.querySelector('.exit').addEventListener('click',()=>stage.classList.remove('live'));
+  addEventListener('keydown',e=>{if(e.key==='Escape')stage.classList.remove('live');});
+}
 document.querySelectorAll('.embed-guard').forEach(g=>{
   const go=g.querySelector('.go');
   if(go){go.addEventListener('click',()=>g.classList.add('active'));}
