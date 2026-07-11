@@ -174,17 +174,28 @@ svg text{font-family:ProductSans,Gilroy,serif}
 .story .simg img{width:100%;height:100%;object-fit:cover}
 @media(max-width:900px){.evcols{grid-template-columns:1fr !important}}
 
-/* --- circle-reveal walkthrough (expands once on arrival; page always scrolls) --- */
-.reveal-stage{position:relative;height:82svh;min-height:520px;margin:56px calc(50% - 50vw) 0;background:#CAD3FB;border-top:1px solid #170600;border-bottom:1px solid #170600;overflow:hidden}
-.reveal-stage .stick{position:absolute;inset:0}
-.reveal-stage .disc{position:absolute;inset:0;background:#170600;clip-path:circle(12% at 50% 50%);transition:clip-path 1.8s cubic-bezier(.22,.61,.36,1)}
-.reveal-stage.open .disc{clip-path:circle(100% at 50% 50%)}
-.reveal-stage .disc iframe{width:100%;height:100%;border:0;pointer-events:none;display:block}
-.reveal-stage.live .disc iframe{pointer-events:auto}
-.reveal-stage .stagecap{position:absolute;top:22px;left:24px;z-index:7;background:#FCF9ED;border:1px solid #170600;border-radius:9999px;padding:8px 16px;font-size:12.5px;letter-spacing:.05em}
-.reveal-stage .stagehint{position:absolute;top:22px;right:24px;z-index:7;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#170600}
-.reveal-stage .enter{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:7}
-.reveal-stage .exit{position:absolute;top:64px;right:24px;z-index:8;display:none;background:#FCF9ED}
-.reveal-stage.live .exit{display:inline-flex}
-.reveal-stage.live .enter,.reveal-stage.live .stagehint{display:none}
-@media (prefers-reduced-motion: reduce){.reveal-stage .disc{transition:none;clip-path:none !important}}
+/* THE SCROLL FIX: allshapes.blog's compiled CSS ships body{overflow:hidden}
+   (their JS removes it after the loading splash; we have no such JS). Override hard. */
+body{overflow:visible !important}
+html{overflow-x:clip}
+
+/* --- shape-masked walkthrough (All Shapes circle motif; click = full screen) --- */
+.shape-stage{position:relative;padding:24px 0 8px;display:flex;justify-content:center}
+.shape-stage .comp{position:relative;width:min(640px,86vw);aspect-ratio:1/1;cursor:pointer;border:0;background:none;padding:0;display:block}
+.shape-stage .bigcircle{position:absolute;inset:6%;border-radius:50%;overflow:hidden;border:1.5px solid #170600;background:#170600}
+.shape-stage .bigcircle iframe{position:absolute;width:178%;height:178%;top:-39%;left:-39%;border:0;pointer-events:none}
+.shape-stage .deco{position:absolute;border-radius:50%;border:1.5px solid #170600}
+.shape-stage .hintpill{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);z-index:3;background:#170600;color:#FCF9ED;border-radius:9999px;padding:12px 24px;font-size:15px;font-family:ProductSans,Gilroy,serif;white-space:nowrap}
+.shape-stage .comp:hover .hintpill{background:#8283DA;color:#fff}
+.shape-stage .comp:focus-visible{outline:3px solid #00BEA9;outline-offset:6px;border-radius:50%}
+@media (prefers-reduced-motion: no-preference){
+  .shape-stage .deco{animation:bob 7s ease-in-out infinite alternate}
+  @keyframes bob{from{transform:translateY(-6px)}to{transform:translateY(8px)}}
+}
+/* fullscreen walkthrough modal */
+.mp-modal{position:fixed;inset:0;z-index:200;background:#170600;display:none}
+.mp-modal.open{display:block}
+.mp-modal iframe{width:100%;height:100%;border:0;display:block}
+.mp-modal .close{position:absolute;top:18px;right:18px;z-index:5;background:#FCF9ED;color:#170600;border:1px solid #170600;border-radius:9999px;padding:11px 22px;font-size:15px;font-family:ProductSans,Gilroy,serif;cursor:pointer}
+.mp-modal .close:hover{background:#CAD3FB}
+.mp-modal .mlabel{position:absolute;top:22px;left:22px;z-index:5;background:rgba(252,249,237,.92);border-radius:9999px;padding:8px 16px;font-size:12.5px}

@@ -20,16 +20,21 @@
   <div class="kick">
     <a class="pill dark" href="#pricing">Hire the Hub</a>
   </div>
-  <div class="reveal-stage" id="wstage" aria-label="3D walkthrough of the space">
-    <div class="stick">
-      <div class="disc">
-        <iframe src="https://my.matterport.com/show/?m=E3hAQ6e2xLR" title="3D walkthrough (sample Matterport space)" allow="fullscreen; xr-spatial-tracking" allowfullscreen loading="lazy"></iframe>
-      </div>
-      <span class="stagecap">The walkthrough · sample scan until the Hub is captured</span>
-      <button class="pill dark enter" type="button">▶&nbsp; Walk the space</button>
-      <button class="pill exit" type="button">✕&nbsp; Exit walkthrough</button>
-      <span class="stagehint">The space opens as you arrive</span>
-    </div>
+  <div class="shape-stage">
+    <button class="comp" id="wopen" type="button" aria-label="Open the 3D walkthrough full screen">
+      <span class="deco" style="width:13%;height:13%;top:2%;left:12%;background:#8486EC"></span>
+      <span class="deco" style="width:9%;height:9%;top:12%;right:6%;background:#BCDAB7"></span>
+      <span class="deco" style="width:7%;height:7%;bottom:14%;left:3%;background:#FFD5C8;animation-delay:1.2s"></span>
+      <span class="deco" style="width:11%;height:11%;bottom:4%;right:10%;background:#00BEA9;animation-delay:2s"></span>
+      <span class="bigcircle"><iframe src="https://my.matterport.com/show/?m=E3hAQ6e2xLR&play=1&qs=1" title="3D walkthrough preview (sample scan)" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></span>
+      <span class="hintpill">▶&nbsp; Walk the space — full screen</span>
+    </button>
+  </div>
+  <p class="sm" style="text-align:center;margin-top:6px">Sample scan until the Hub is captured · opens full screen, Esc to come back</p>
+  <div class="mp-modal" id="wmodal" role="dialog" aria-modal="true" aria-label="3D walkthrough">
+    <span class="mlabel">All Shapes Space · 3D walkthrough (sample scan)</span>
+    <button class="close" type="button">✕&nbsp; Back to the page</button>
+    <iframe data-src="https://my.matterport.com/show/?m=E3hAQ6e2xLR&play=1" title="3D walkthrough (sample Matterport space)" allow="fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
   </div>
 </div></div>
 
@@ -169,7 +174,7 @@
 <section class="band paper" id="stories"><div class="shell">
   <p class="label">All Shapes</p>
   <h2>The stories behind the space</h2>
-  <p class="lede dim">The space isn't the point — the community is. All Shapes exists online in the stories and offline in this room; same people, same purpose, one front door on St Pauls Terrace. A few stories to start with:</p>
+  <p class="lede dim">The Space Experience is an All Shapes project — the publication telling inclusive stories from people of all shapes. A few to start with:</p>
   <div class="grid g3" style="margin-top:30px">
     <a class="story" href="https://allshapes.blog/en/articles/bridging-art-inclusivity-and-community-with-illustrator-tiffany-beucher" target="_blank" rel="noopener">
       <div class="simg"><img src="https://cdn.sanity.io/images/u5ms77ce/production/ac623d766059ef435b994dc8770e69441f118d3d-3508x2480.png" alt="" loading="lazy"></div>
@@ -251,13 +256,14 @@
 const spyLinks=[...document.querySelectorAll('[data-spy]')];
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){spyLinks.forEach(l=>l.classList.toggle('on',l.dataset.spy===e.target.id));}})},{rootMargin:'-30% 0px -60% 0px'});
 spyLinks.forEach(l=>{const t=document.getElementById(l.dataset.spy);if(t)obs.observe(t);});
-const stage=document.getElementById('wstage');
-if(stage){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){stage.classList.add('open');io.disconnect();}})},{threshold:.35});
-  io.observe(stage);
-  stage.querySelector('.enter').addEventListener('click',()=>stage.classList.add('live'));
-  stage.querySelector('.exit').addEventListener('click',()=>stage.classList.remove('live'));
-  addEventListener('keydown',e=>{if(e.key==='Escape')stage.classList.remove('live');});
+const wopen=document.getElementById('wopen'),wmodal=document.getElementById('wmodal');
+if(wopen&&wmodal){
+  const mFrame=wmodal.querySelector('iframe');
+  const openM=()=>{if(!mFrame.src)mFrame.src=mFrame.dataset.src;wmodal.classList.add('open');document.body.style.overflow='hidden';wmodal.querySelector('.close').focus();};
+  const closeM=()=>{wmodal.classList.remove('open');document.body.style.overflow='';wopen.focus();};
+  wopen.addEventListener('click',openM);
+  wmodal.querySelector('.close').addEventListener('click',closeM);
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&wmodal.classList.contains('open'))closeM();});
 }
 document.querySelectorAll('.embed-guard').forEach(g=>{
   const go=g.querySelector('.go');

@@ -270,13 +270,14 @@ select(3);
 const spyLinks=[...document.querySelectorAll('[data-spy]')];
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){spyLinks.forEach(l=>l.classList.toggle('on',l.dataset.spy===e.target.id));}})},{rootMargin:'-30% 0px -60% 0px'});
 spyLinks.forEach(l=>{const t=document.getElementById(l.dataset.spy);if(t)obs.observe(t);});
-const stage=document.getElementById('wstage');
-if(stage){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){stage.classList.add('open');io.disconnect();}})},{threshold:.35});
-  io.observe(stage);
-  stage.querySelector('.enter').addEventListener('click',()=>stage.classList.add('live'));
-  stage.querySelector('.exit').addEventListener('click',()=>stage.classList.remove('live'));
-  addEventListener('keydown',e=>{if(e.key==='Escape')stage.classList.remove('live');});
+const wopen=document.getElementById('wopen'),wmodal=document.getElementById('wmodal');
+if(wopen&&wmodal){
+  const mFrame=wmodal.querySelector('iframe');
+  const openM=()=>{if(!mFrame.src)mFrame.src=mFrame.dataset.src;wmodal.classList.add('open');document.body.style.overflow='hidden';wmodal.querySelector('.close').focus();};
+  const closeM=()=>{wmodal.classList.remove('open');document.body.style.overflow='';wopen.focus();};
+  wopen.addEventListener('click',openM);
+  wmodal.querySelector('.close').addEventListener('click',closeM);
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&wmodal.classList.contains('open'))closeM();});
 }
 document.querySelectorAll('.embed-guard').forEach(g=>{
   const go=g.querySelector('.go');
