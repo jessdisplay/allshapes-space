@@ -5,7 +5,7 @@
 </head><body><header class="hd"><div class="shell">
   <a class="wordmark" href="index.html"><i></i>All Shapes <em>× Wonder Byte</em></a>
   <nav class="nav" aria-label="Site">
-    <a href="index.html">The Space</a>
+    <a href="index.html">All Shapes Space</a>
     <a href="launch-brief.html" class="on">Launch brief</a>
     <a href="proposal.html">Proposal</a>
     <a href="index.html#pricing">Pricing</a>
@@ -195,7 +195,7 @@
       <p style="margin-top:18px"><a class="pill dark" href="mailto:dev@riseos.care">Get in touch</a></p></div>
     <div class="brand"><div class="bg">All Shapes</div><div class="s">A display venture</div></div>
   </div>
-  <div class="legal"><span>© 2023 Display, All rights reserved</span><span>The Space Experience — working draft, All Shapes × Wonder Byte Technology</span></div>
+  <div class="legal"><span>© 2023 Display, All rights reserved</span><span>All Shapes Space — working draft, All Shapes × Wonder Byte Technology</span></div>
 </div></footer><script>
 const STATIONS=[
  {n:1,x:210,y:540,title:"Welcome — heritage entry",robot:"Cruzr · reception robot",tag:"arrival",
@@ -272,15 +272,8 @@ const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){spyL
 spyLinks.forEach(l=>{const t=document.getElementById(l.dataset.spy);if(t)obs.observe(t);});
 const stage=document.getElementById('wstage');
 if(stage){
-  const disc=stage.querySelector('.disc');
-  const rm=matchMedia('(prefers-reduced-motion: reduce)');
-  const onScroll=()=>{
-    if(rm.matches){disc.style.clipPath='none';return;}
-    const total=stage.offsetHeight-innerHeight;
-    const p=Math.min(1,Math.max(0,-stage.getBoundingClientRect().top/Math.max(1,total)));
-    disc.style.clipPath='circle('+(13+p*92)+'% at 50% 50%)';
-  };
-  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){stage.classList.add('open');io.disconnect();}})},{threshold:.35});
+  io.observe(stage);
   stage.querySelector('.enter').addEventListener('click',()=>stage.classList.add('live'));
   stage.querySelector('.exit').addEventListener('click',()=>stage.classList.remove('live'));
   addEventListener('keydown',e=>{if(e.key==='Escape')stage.classList.remove('live');});

@@ -174,10 +174,11 @@ svg text{font-family:ProductSans,Gilroy,serif}
 .story .simg img{width:100%;height:100%;object-fit:cover}
 @media(max-width:900px){.evcols{grid-template-columns:1fr !important}}
 
-/* --- circle-reveal walkthrough stage (All Shapes periwinkle motif) --- */
-.reveal-stage{height:230svh;position:relative;margin:56px calc(50% - 50vw) 0;background:#CAD3FB;border-top:1px solid #170600;border-bottom:1px solid #170600}
-.reveal-stage .stick{position:sticky;top:0;height:100svh;overflow:hidden}
-.reveal-stage .disc{position:absolute;inset:0;clip-path:circle(13% at 50% 50%);background:#170600}
+/* --- circle-reveal walkthrough (expands once on arrival; page always scrolls) --- */
+.reveal-stage{position:relative;height:82svh;min-height:520px;margin:56px calc(50% - 50vw) 0;background:#CAD3FB;border-top:1px solid #170600;border-bottom:1px solid #170600;overflow:hidden}
+.reveal-stage .stick{position:absolute;inset:0}
+.reveal-stage .disc{position:absolute;inset:0;background:#170600;clip-path:circle(12% at 50% 50%);transition:clip-path 1.8s cubic-bezier(.22,.61,.36,1)}
+.reveal-stage.open .disc{clip-path:circle(100% at 50% 50%)}
 .reveal-stage .disc iframe{width:100%;height:100%;border:0;pointer-events:none;display:block}
 .reveal-stage.live .disc iframe{pointer-events:auto}
 .reveal-stage .stagecap{position:absolute;top:22px;left:24px;z-index:7;background:#FCF9ED;border:1px solid #170600;border-radius:9999px;padding:8px 16px;font-size:12.5px;letter-spacing:.05em}
@@ -186,4 +187,4 @@ svg text{font-family:ProductSans,Gilroy,serif}
 .reveal-stage .exit{position:absolute;top:64px;right:24px;z-index:8;display:none;background:#FCF9ED}
 .reveal-stage.live .exit{display:inline-flex}
 .reveal-stage.live .enter,.reveal-stage.live .stagehint{display:none}
-@media (prefers-reduced-motion: reduce){.reveal-stage{height:100svh}.reveal-stage .disc{clip-path:none !important}}
+@media (prefers-reduced-motion: reduce){.reveal-stage .disc{transition:none;clip-path:none !important}}
