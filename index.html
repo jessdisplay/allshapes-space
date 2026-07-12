@@ -41,11 +41,6 @@
     </button>
   </div>
   <p class="sm" style="text-align:center;margin-top:6px">Sample scan until the Hub is captured · click to explore full screen · Esc to come back</p>
-  <div class="mp-modal" id="wmodal" role="dialog" aria-modal="true" aria-label="3D walkthrough">
-    <span class="mlabel">All Shapes Club · 3D walkthrough (sample scan)</span>
-    <button class="close" type="button">✕&nbsp; Back to the page</button>
-    <iframe data-src="https://my.matterport.com/show/?m=E3hAQ6e2xLR&play=1" title="3D walkthrough (sample Matterport space)" allow="fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-  </div></div>
 
 <section id="space"><div class="shell">
   <p class="label">The space</p>
@@ -286,7 +281,12 @@
     <div class="brand"><div class="bg">All Shapes</div><div class="s">A display venture</div></div>
   </div>
   <div class="legal"><span>© 2023 Display, All rights reserved</span><span>All Shapes Club — working draft, All Shapes × Wonder Byte Technology</span></div>
-</div></footer><script>
+</div></footer>  <div class="mp-modal" id="wmodal" role="dialog" aria-modal="true" aria-label="3D walkthrough">
+    <span class="mlabel">All Shapes Club · 3D walkthrough (sample scan)</span>
+    <button class="close" type="button">✕&nbsp; Back to the page</button>
+    <iframe data-src="https://my.matterport.com/show/?m=E3hAQ6e2xLR&play=1&qs=1" title="3D walkthrough (sample Matterport space)" allow="fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+  </div></div>
+<script>
 const spyLinks=[...document.querySelectorAll('[data-spy]')];
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){spyLinks.forEach(l=>l.classList.toggle('on',l.dataset.spy===e.target.id));}})},{rootMargin:'-30% 0px -60% 0px'});
 spyLinks.forEach(l=>{const t=document.getElementById(l.dataset.spy);if(t)obs.observe(t);});
